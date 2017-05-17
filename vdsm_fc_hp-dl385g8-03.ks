@@ -1,0 +1,50 @@
+#
+# KS for vdsm fc test on hp-dl385g8-03
+#
+### Language ###
+lang en_US.UTF-8
+
+### Timezone ###
+timezone Asia/Shanghai
+
+### Keyboard ###
+keyboard --vckeymap=us --xlayouts='us'
+
+### Kdump ###
+
+### Security ###
+
+### User ###
+rootpw --plaintext redhat
+auth --enableshadow --passalgo=md5
+
+### Misc ###
+services --enabled=sshd
+selinux --enforcing
+
+### Installation mode ###
+install
+#liveimg url will substitued by autoframework
+liveimg --url=http://10.66.10.22:8090/rhvh_ngn/squashimg/redhat-virtualization-host-4.1-20170120.0/redhat-virtualization-host-4.1-20170120.0.x86_64.liveimg.squashfs
+text
+reboot
+
+### Network ###
+network --device=em2 --bootproto=dhcp
+
+### Partitioning ###
+#ignoredisk --drives=/dev/disk/by-id/scsi-3600508b1001ccb4a1de53313beabbd82
+ignoredisk --only_use=/dev/disk/by-id/scsi-36005076300810b3e0000000000000267
+zerombr
+clearpart --all
+bootloader --location=mbr
+autopart --type=thinp
+
+### Pre deal ###
+
+### Post deal ###
+%post --erroronfail
+
+imgbase layout --init
+%end
+
