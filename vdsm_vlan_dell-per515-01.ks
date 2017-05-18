@@ -41,69 +41,6 @@ autopart --type=thinp
 
 ### Post deal ###
 %post --erroronfail
-compose_check_data(){
-python << ES
-import pickle
-import commands
-import os
-
-REMOTE_TMP_FILE_DIR = '/boot/autotest'
-CHECKDATA_MAP_PKL = 'checkdata_map.pkl'
-REMOTE_CHECKDATA_MAP_PKL = os.path.join(REMOTE_TMP_FILE_DIR, CHECKDATA_MAP_PKL)
-
-os.mkdir(REMOTE_TMP_FILE_DIR)
-
-checkdata_map = {}
-
-checkdata_map['network'] = {
-    'vlan': {
-        'DEVICE': 'p3p2.50',
-        'TYPE': 'Vlan',
-        'BOOTPROTO': 'dhcp',
-        'VLAN_ID': '50',
-        'ONBOOT': 'yes'
-    }
-}
-
-output = commands.getoutput('vgs --noheadings -o vg_name')
-checkdata_map['partition'] = {
-    '/boot': {
-        'lvm': False,
-        'device_alias': '/dev/mapper/mpatha1',
-        'device_wwid': '/dev/mapper/36005076300810b3e0000000000000022p1',
-        'fstype': 'ext4',
-        'size': '1024'
-    },
-    'volgroup': {
-        'lvm': True,
-        'name': output.strip()
-    },
-   '/': {
-        'lvm': True,
-        'name': 'root',
-        'fstype': 'ext4',
-        'size': '6144',
-        'grow': True
-    },
-    '/var': {
-        'lvm': True,
-        'name': 'var',
-        'fstype': 'ext4',
-        'size': '15360'
-    },
-    'pool_meta': {
-        'lvm': True,
-        'name': 'pool00_tmeta',
-        'size': '1024'
-    }
-}
-
-fp = open(REMOTE_CHECKDATA_MAP_PKL, 'wb')
-pickle.dump(checkdata_map, fp)
-fp.close()
-ES
-}
 
 imgbase layout --init
-compose_check_data
 %end
