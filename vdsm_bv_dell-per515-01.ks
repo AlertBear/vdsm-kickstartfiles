@@ -28,7 +28,7 @@ reboot
 
 ### Network ###
 network --device=em2 --bootproto=dhcp
-network --device=bond0 --bootproto=dhcp --bondslaves=p2p1,p2p2 --bondopts=mode=active-backup,primary=p2p1,miimon=100 --vlanid=50
+network --device=bond1 --bootproto=dhcp --bondslaves=p2p1,p2p2 --bondopts=mode=active-backup,primary=p2p1,miimon=100 --vlanid=50
 
 ### Partitioning ###
 ignoredisk --only-use=/dev/disk/by-id/scsi-360a9800050334c33424b41762d726954

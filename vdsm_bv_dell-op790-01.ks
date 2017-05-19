@@ -28,7 +28,7 @@ reboot
 
 ### Network ###
 network --device=em1 --bootproto=dhcp
-network --device=bond0 --bootproto=dhcp --bondslaves=p3p1,p4p1 --bondopts=mode=active-backup,primary=p3p1,miimon=100 --vlanid=20
+network --device=bond1 --bootproto=dhcp --bondslaves=p3p1,p4p1 --bondopts=mode=active-backup,primary=p3p1,miimon=100 --vlanid=20
 
 ### Partitioning ###
 zerombr

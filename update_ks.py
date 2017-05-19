@@ -122,5 +122,9 @@ if __name__ == "__main__":
     build = sys.argv[2]
 
     squashfs_link = get_rhvh_squashfs_link(build)
-    cmd = '''sed -i 's/^liveimg --url=.*/liveimg --url="%s"/' %s''' % (squashfs_link, ks)
+
+    cmd = "sed -n '/liveimg --url=.*/=' %s" % ks
+    line_num = int(execute(cmd))
+    cmd = "sed -i '%sc liveimg --url=%s' %s" % (line_num, squashfs_link, ks) 
     execute(cmd)
+
